@@ -15,7 +15,10 @@ BIN     := $(wildcard src/*cpp)
 
 .PHONY: all
 
-all: mkbin bin clean gitclean
+all: gitinit mkbin bin clean gitclean
+
+gitinit:
+	-cd tabixpp && git submodule init && git submodule update
 
 bin: libsplit.a libgencode.a
 	$(CC) $(BIN) *.a -Ilib/ -I. -o bin/coverUp
