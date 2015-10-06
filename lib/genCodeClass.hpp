@@ -27,29 +27,34 @@ class cds;
 class gene{
 friend class gcClass;
 protected:
-    bool proteinCoding;
-    int  start;
-    int  end;
-    int  length;
-    int  childrenLen;
-    char strand;
-    std::string type;
-    std::string chr;
-    std::string id;
-    std::string geneName;
-    std::map<std::string, gene *> children;
-    std::map<std::string, std::string> attributes;
+  bool proteinCoding;
+  int  start;
+  int  end;
+  int  length;
+  int  childrenLen;
+  char strand;
+  std::string type;
+  std::string chr;
+  std::string id;
+  std::string geneName;
+  std::map<std::string, gene *> children;
+  std::map<std::string, std::string> attributes;
 public:
-    virtual bool parseFeature(std::string &);
-    virtual void printFeature(void);
-    bool isProteinCoding(void);
-    bool getLongestChild(gene **);
-    bool getChildren(std::vector<gene *> &);
-    int getChildrenLength(void);
-    
-    ~gene(void);
-    gene(void);
-    
+  virtual bool parseFeature(std::string &);
+  virtual void printFeature(void);
+  bool isProteinCoding(void);
+  bool getLongestChild(gene **);
+  bool getChildren(std::vector<gene *> &);
+  int getChildrenLength(void);
+  int getStart(void);
+  int getEnd(void);
+  int getLength(void);
+  std::string getSeqid(void);
+  std::string getGeneName(void);
+  
+  ~gene(void);
+  gene(void);
+  
 };
 
 class transcript : public gene {

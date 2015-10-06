@@ -14,6 +14,25 @@ gene::gene(void){
     childrenLen = 0;
 }
 
+std::string gene::getGeneName(void){
+  return geneName;
+}
+
+std::string gene::getSeqid(void){
+  return chr;
+}
+
+int gene::getStart(void){
+  return start;
+}
+int gene::getEnd(void){
+  return end;
+}
+
+int gene::getLength(void){
+  return length;
+}
+
 bool gene::isProteinCoding(void){
     
     if(proteinCoding){

@@ -3,10 +3,10 @@
 #     zev.kronenberg@gmail.com       #
 ######################################
 
-
 CC=g++
 FLAGS=-std=c++0x -g 
-LD=-lsplit -lgencode -lm
+LD= -lm -lz  -lpthread
+
 
 HEADERS := $(wildcard lib/*hpp)
 SOURCE  := $(wildcard lib/*cpp)
@@ -15,23 +15,32 @@ BIN     := $(wildcard src/*cpp)
 
 .PHONY: all
 
-all: gitinit mkbin bin clean gitclean
+all:  mkbin bin 
 
 gitinit:
 	-cd tabixpp && git submodule init && git submodule update
 
-bin: libsplit.a libgencode.a
-	$(CC) $(BIN) *.a -Ilib/ -I. -o bin/coverUp
+bin: libsplit.a libgencode.a libtabix.a libhts.a libyagr.a
+	$(CC) $(FLAGS) $(LD) $(BIN) *.a  -Ilib/  -I. -Itabixpp/htslib -Ltabixpp/htslib -lhts -o bin/coverUp
 mkbin:
 	-mkdir bin
 
+maketabix: gitinit
+	-cd tabixpp && make
 $(OBJECTS):
 	$(CC) -c $(FLAGS) $(SOURCE)
+
+libhts.a: maketabix
+	cp tabixpp/htslib/libhts.a .
+libtabix.a: maketabix
+	ar rcs libtabix.a tabixpp/tabix.o
 libsplit.a: $(OBJECTS)
 	ar rcs libsplit.a split.o
 libgencode.a: $(OBJECTS)
 	ar rcs libgencode.a genCodeClass.o
+libyagr.a:
+	ar rsc libyagar.a yagbv.o
 clean:
 	-rm *.a && rm *.o && rm data/gencode.v19.annotation.gtf.gindx
 gitclean:
-	-rm *~ && rm src/*~ && rm lib/*~ 
+	-rm *~ && rm src/*~ && rm lib/*~
