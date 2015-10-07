@@ -76,18 +76,30 @@ void gr::clear(int i){
 }
 
 void gr::setRange(int s, int e){
+
+  if(e >= len){
+    std::cerr << "FATAL: setRange : out of range" << std::endl;
+    std::cerr << "       specified: " << e <<  " max: " << len << std::endl;
+    exit(1);
+  }
     
-    for(int i = s; i <= e; i++){
-        set(i);
-    }
-    
+  for(int i = s; i <= e; i++){
+    set(i);
+  }
+  
 }
 
 void gr::clearRange(int s, int e){
-    
-    for(int i = s; i <= e; i++){
-        clear(i);
-    }
+  
+  if(e >= len){
+    std::cerr << "FATAL: setRange : out of range" << std::endl;
+    std::cerr << "       specified: " << e <<  " max: " << len << std::endl;
+    exit(1);
+  }
+  
+  for(int i = s; i <= e; i++){
+    clear(i);
+  }
     
 }
 
